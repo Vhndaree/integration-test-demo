@@ -1,0 +1,34 @@
+name: Build, publish image and test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup workspace
+        run: |
+          echo "Cleaning up previous run from ${{ github.workspace }}"
+          set -e # fail on error
+          shopt -s dotglob # include hidden files
+          sudo rm -rf *
+
+      - name: Checkout repository code
+        uses: actions/checkout@v3
+    
+      - name: Build image
+        run: docker build -t vhndaree/test-app:develop .
+      
+      - name: Publish image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker push vhndaree/test-app:develop
+        
+      - name: Run integration tests
+        run: ./test/run-integration-tests.sh develop
+
+      
