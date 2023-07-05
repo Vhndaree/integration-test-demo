@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "603598ad-769f-4872-be4b-769e9f8dfdeb",
+		"name": "integration-test-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8304934"
+	},
+	"item": [
+		{
+			"name": "Should store a book in the list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"set collection variable id\", function () {",
+							"    var result = pm.response.json();",
+							"",
+							"    pm.collectionVariables.set(\"id\", result.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Sapiens\",\n    \"author\": \"Yuval Noah Harari\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:8848/book",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8848",
+					"path": [
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Should update a book with id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Sapiens: A Brief History of Humankind\",\n    \"author\": \"Yuval Noah Harari\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:8848/book/{{id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8848",
+					"path": [
+						"book",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Should return list of all books",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:8848/book",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8848",
+					"path": [
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Should return a book by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:8848/book/{{id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8848",
+					"path": [
+						"book",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Should delete a book with id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:8848/book/{{id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8848",
+					"path": [
+						"book",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
