@@ -13,9 +13,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
 							"pm.test(\"set collection variable id\", function () {",
 							"    var result = pm.response.json();",
-							"",
 							"    pm.collectionVariables.set(\"id\", result.id);",
 							"});"
 						],
@@ -67,7 +70,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"Sapiens: A Brief History of Humankind\",\n    \"author\": \"Yuval Noah Harari\"\n}",
+					"raw": "{\n    \"title\": \"Sapiens: A Brief History of Humankind\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
