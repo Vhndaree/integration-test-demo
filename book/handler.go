@@ -13,7 +13,7 @@ import (
 
 type IService interface {
 	GetAll() []*Book
-	Post(book *Book) error
+	Post(book *Book) (*Book, error)
 	Get(id string) (*Book, error)
 	Update(id string, book *Book) error
 	Delete(id string)
@@ -63,13 +63,15 @@ func (h *Handler) post() http.HandlerFunc {
 		}
 		defer r.Body.Close()
 
-		err = h.service.Post(&payload)
+		book, err := h.service.Post(&payload)
 		if err != nil {
 			log.Println(fmt.Sprintf("[ERROR] (%s)", err))
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Book-Id", book.ID.String())
 		w.WriteHeader(http.StatusCreated)
 	}
 }

@@ -32,12 +32,13 @@ func (r *Repository) Post(book *Book) {
 	r.books[book.ID.String()] = book
 }
 
-func (r *Repository) Put(book *Book) error {
-	book, ok := r.books[book.ID.String()]
+func (r *Repository) Put(id string, book *Book) error {
+	oldBook, ok := r.books[id]
 	if !ok {
 		return fmt.Errorf("[ERROR] Resource not exist in the store")
 	}
 
+	book.ID = oldBook.ID
 	r.books[book.ID.String()] = book
 	return nil
 }

@@ -10,7 +10,7 @@ type IRepository interface {
 	GetAll() (books []*Book)
 	Post(book *Book)
 	Get(id string) *Book
-	Put(book *Book) error
+	Put(id string, book *Book) error
 	Delete(id string)
 }
 
@@ -32,14 +32,14 @@ func (s *Service) GetAll() []*Book {
 	return s.repo.GetAll()
 }
 
-func (s *Service) Post(book *Book) error {
+func (s *Service) Post(book *Book) (*Book, error) {
 	if book.Title == "" {
-		return fmt.Errorf("invalid data")
+		return nil, fmt.Errorf("invalid data")
 	}
 
 	book.ID = uuid.New()
 	s.repo.Post(book)
-	return nil
+	return book, nil
 }
 func (s *Service) Get(id string) (*Book, error) {
 	book := s.repo.Get(id)
@@ -56,11 +56,7 @@ func (s *Service) Update(id string, book *Book) error {
 		return ErrNotFound
 	}
 
-	if oldBook.ID.String() != id {
-		return fmt.Errorf("not authorized")
-	}
-
-	return s.repo.Put(book)
+	return s.repo.Put(id, book)
 }
 
 func (s *Service) Delete(id string) {

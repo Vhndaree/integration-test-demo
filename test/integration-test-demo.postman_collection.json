@@ -18,9 +18,10 @@
 							"});",
 							"",
 							"pm.test(\"set collection variable id\", function () {",
-							"    var result = pm.response.json();",
-							"    pm.collectionVariables.set(\"id\", result.id);",
-							"});"
+							"    var result = pm.response.headers.get(\"Book-Id\");",
+							"    pm.collectionVariables.set(\"id\", result);",
+							"});",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -59,7 +60,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -70,7 +73,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"Sapiens: A Brief History of Humankind\"\n}",
+					"raw": "{\n    \"title\": \"Sapiens: A Brief History of Humankind\",\n    \"author\": \"Yuval Noah Harari\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -94,6 +97,19 @@
 		},
 		{
 			"name": "Should return list of all books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -113,6 +129,19 @@
 		},
 		{
 			"name": "Should return a book by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -133,6 +162,19 @@
 		},
 		{
 			"name": "Should delete a book with id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
