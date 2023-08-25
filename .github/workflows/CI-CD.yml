@@ -22,11 +22,6 @@ jobs:
     
       - name: Build image
         run: docker build -t vhndaree/test-app:develop .
-      
-      - name: Publish image
-        run: |
-          docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-          docker push vhndaree/test-app:develop
         
       - name: Run integration tests
         run: ./test/run-integration-tests.sh develop
